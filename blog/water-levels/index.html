@@ -1,0 +1,96 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Live water monitoring in the United States</title><meta name="description" content="Real-time streamflow (discharge) from official USGS Water Data monitoring stations in the United States. Relevant for groundwater, water wells, drilling an"><meta name="theme-color" content="#0A2540">
+<link rel="canonical" href="https://standardpenetrationtest.com/blog/water-levels/"><meta property="og:title" content="Live water monitoring in the United States"><meta property="og:url" content="https://standardpenetrationtest.com/blog/water-levels/">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebPage", "name": "Live water monitoring in the United States", "url": "https://standardpenetrationtest.com/blog/water-levels/", "inLanguage": "en", "publisher": {"@type": "Organization", "name": "Standard Penetration Test"}}</script>
+<style>:root{--primary:#0A2540;--accent:#0369a1;--bg:#f9fafb;--border:#e5e7eb;--muted:#64748b;--font-body:'Source Sans 3',sans-serif;--font-h:'Source Serif 4',Georgia,serif}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:var(--font-body);line-height:1.65;color:#1f2937;background:var(--bg)}a{color:var(--accent)}.container{max-width:1100px;margin:0 auto;padding:0 24px}
+header{background:var(--primary);color:#fff;padding:18px 0}header .container{display:flex;align-items:center;justify-content:space-between}header a{color:#fff;text-decoration:none}header .brand{font-family:var(--font-h);font-size:1.2rem;font-weight:700}header nav{display:flex;gap:16px;font-size:.92rem}
+.hero{background:linear-gradient(135deg,#0369a1,#075985);color:#fff;padding:56px 0 36px}.hero h1{font-family:var(--font-h);font-size:2.2rem;margin-bottom:12px}.hero p{color:#bae6fd;max-width:720px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin:24px 0}.stat{background:#fff;border:1px solid var(--border);border-radius:8px;padding:18px;text-align:center}.stat-num{font-size:1.7rem;font-weight:700;color:var(--primary);font-family:var(--font-h)}.stat-label{font-size:.82rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:4px}
+main{padding:38px 0 60px}main h2{font-family:var(--font-h);font-size:1.4rem;color:var(--primary);margin:26px 0 12px;border-bottom:2px solid #0369a1;padding-bottom:6px;display:inline-block}main p{margin-bottom:14px}
+table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--border);border-radius:8px;overflow:hidden}td{padding:9px 14px;border-bottom:1px solid var(--border)}tr td:last-child{text-align:right;white-space:nowrap}
+.src{background:#eff6ff;border-left:4px solid #2563eb;padding:16px 20px;margin:22px 0;border-radius:4px}.src a{color:#2563eb}
+.cta{background:var(--primary);color:#fff;padding:30px;border-radius:12px;text-align:center;margin:30px 0}.cta h3{color:#fff;margin-bottom:8px;font-family:var(--font-h)}.cta p{color:#e5e7eb}.cta a{display:inline-block;background:#0369a1;color:#fff;padding:12px 28px;border-radius:6px;text-decoration:none;font-weight:600;margin-top:14px}
+footer{background:#0f172a;color:#cbd5e1;padding:26px 0;font-size:.88rem;margin-top:36px}footer a{color:#fff}</style>
+<style id="ftr-fix">footer .container>div{min-width:0}footer p,footer a{overflow-wrap:anywhere;word-break:break-word}</style></head><body><header><div class="container"><a href="/" class="brand">Standard Penetration Test</a><nav><a href="/">Home</a><a href="/blog/water-levels/">Water data</a></nav></div></header>
+<section class="hero"><div class="container"><h1>Live water monitoring in the United States</h1><p>Real-time streamflow (discharge) from official USGS Water Data monitoring stations in the United States. Relevant for groundwater, water wells, drilling and geotechnical site work.</p></div></section>
+<main><div class="container"><div class="stats">
+<div class="stat"><div class="stat-num">40</div><div class="stat-label">Active stations</div></div>
+<div class="stat"><div class="stat-num">314000</div><div class="stat-label">Max flow (ft³/s)</div></div>
+<div class="stat"><div class="stat-num">02 Jun 2026</div><div class="stat-label">Updated</div></div></div>
+<h2>Monitoring stations</h2><div id="w-map" style="height:440px;width:100%;border-radius:12px;border:1px solid #e5e7eb;margin-bottom:28px"></div>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>(function(){var el=document.getElementById('w-map');if(!el||!window.L)return;var map=L.map('w-map').setView([38.910,-112.351],5);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{attribution:'&copy; OSM',maxZoom:12}).addTo(map);
+var marks=[[46.1812,-123.1835,"Columbia River At Port Westward, N",314000.0,"ft³/s"],
+[45.6207,-122.6734,"Columbia River At Vancouver, Wa",242000.0,"ft³/s"],
+[49.0007,-117.6294,"Columbia River At International Bo",181000.0,"ft³/s"],
+[45.6083,-121.1899,"Columbia River At The Dalles, Or",181000.0,"ft³/s"],
+[46.6287,-119.8647,"Columbia River Below Priest Rapids",159000.0,"ft³/s"],
+[48.7810,-117.4164,"Pend Oreille River Below Box Canyo",72000.0,"ft³/s"],
+[48.9988,-117.3536,"Pend Oreille River At Internationa",45700.0,"ft³/s"],
+[46.0971,-116.9777,"Snake River Near Anatone, Wa",39100.0,"ft³/s"],
+[38.7743,-121.5983,"Sacramento R A Verona Ca",14100.0,"ft³/s"],
+[48.4448,-122.3354,"Skagit River Near Mount Vernon, Wa",13100.0,"ft³/s"],
+[38.0558,-121.6669,"False R Nr Oakley Ca",13000.0,"ft³/s"],
+[48.5243,-121.7710,"Skagit River Near Concrete, Wa",12900.0,"ft³/s"],
+[45.2544,-116.6969,"Snake River At Hells Canyon Dam Id",12700.0,"ft³/s"],
+[33.7191,-114.4975,"Colorado River Below Palo Verde Da",12600.0,"ft³/s"],
+[38.4557,-121.5016,"Sacramento R A Freeport Ca",12500.0,"ft³/s"],
+[40.2885,-122.1866,"Sacramento R Ab Bend Bridge Nr Red",12400.0,"ft³/s"],
+[40.6010,-122.4445,"Sacramento R A Keswick Ca",11500.0,"ft³/s"],
+[29.1444,-95.6061,"Brazos Rv Nr West Columbia, Tx",11500.0,"ft³/s"],
+[29.5677,-95.6681,"Brazos Rv Nr Sugar Land, Tx",10800.0,"ft³/s"],
+[29.3497,-95.5825,"Brazos Rv Nr Rosharon, Tx",10800.0,"ft³/s"],
+[45.2846,-122.9615,"Willamette River At Newberg, Or",10000.0,"ft³/s"],
+[31.3385,-95.6563,"Trinity Rv Nr Crockett, Tx",9660.0,"ft³/s"],
+[29.5825,-95.7577,"Brazos Rv At Richmond, Tx",9640.0,"ft³/s"],
+[39.2140,-122.0002,"Sacramento R A Colusa Ca",9400.0,"ft³/s"],
+[44.9443,-123.0429,"Willamette River At Salem, Or",9350.0,"ft³/s"],
+[29.8083,-96.0956,"Brazos Rv At San Felipe, Tx",8720.0,"ft³/s"],
+[33.6840,-94.6944,"Red River Near De Kalb, Tx",8640.0,"ft³/s"],
+[30.5721,-94.9488,"Trinity Rv Nr Goodrich, Tx",8440.0,"ft³/s"],
+[39.0099,-121.8247,"Sacramento R Bl Wilkins Slough Nr ",8340.0,"ft³/s"],
+[30.4252,-94.8508,"Trinity Rv At Romayor, Tx",7890.0,"ft³/s"],
+[32.8710,-114.4805,"All-American Canal Nr Imperial Dam",7860.0,"ft³/s"],
+[45.5175,-122.6692,"Willamette River At Portland, Or",7810.0,"ft³/s"],
+[38.0164,-121.5819,"Holland Cut Nr Bethel Island Ca",7790.0,"ft³/s"],
+[30.1291,-96.1877,"Brazos Rv Nr Hempstead, Tx",7610.0,"ft³/s"],
+[32.2250,-94.2253,"Sabine Rv Nr Carthage, Tx",7250.0,"ft³/s"],
+[38.2409,-121.5158,"Sacramento R Bl Walnut Grove Br A ",7130.0,"ft³/s"],
+[30.0577,-94.8183,"Trinity Rv At Liberty, Tx",6870.0,"ft³/s"],
+[31.6485,-95.7894,"Trinity Rv Nr Oakwood, Tx",6820.0,"ft³/s"],
+[38.1940,-121.6580,"Cache Slough Ab Ryer Island Ferry ",6770.0,"ft³/s"],
+[48.5337,-121.4298,"Skagit River At Marblemount, Wa",6670.0,"ft³/s"]];marks.forEach(function(m){L.circleMarker([m[0],m[1]],{radius:6,fillColor:'#0369a1',color:'#fff',weight:2,fillOpacity:.85}).addTo(map).bindPopup('<strong>'+m[2]+'</strong><br>'+m[3]+' '+m[4]);});})();</script>
+<h2>Current readings</h2><table><tr><th style="text-align:left;padding:10px 14px;background:#0A2540;color:#fff">Station</th><th style="text-align:right;padding:10px 14px;background:#0A2540;color:#fff">Reading</th></tr><tr><td>Columbia River At Port Westward, Near Quincy, Or</td><td><strong>314000.0</strong> ft³/s</td></tr>
+<tr><td>Columbia River At Vancouver, Wa</td><td><strong>242000.0</strong> ft³/s</td></tr>
+<tr><td>Columbia River At International Boundary</td><td><strong>181000.0</strong> ft³/s</td></tr>
+<tr><td>Columbia River At The Dalles, Or</td><td><strong>181000.0</strong> ft³/s</td></tr>
+<tr><td>Columbia River Below Priest Rapids Dam, Wa</td><td><strong>159000.0</strong> ft³/s</td></tr>
+<tr><td>Pend Oreille River Below Box Canyon Near Ione, Wa</td><td><strong>72000.0</strong> ft³/s</td></tr>
+<tr><td>Pend Oreille River At International Boundary</td><td><strong>45700.0</strong> ft³/s</td></tr>
+<tr><td>Snake River Near Anatone, Wa</td><td><strong>39100.0</strong> ft³/s</td></tr>
+<tr><td>Sacramento R A Verona Ca</td><td><strong>14100.0</strong> ft³/s</td></tr>
+<tr><td>Skagit River Near Mount Vernon, Wa</td><td><strong>13100.0</strong> ft³/s</td></tr>
+<tr><td>False R Nr Oakley Ca</td><td><strong>13000.0</strong> ft³/s</td></tr>
+<tr><td>Skagit River Near Concrete, Wa</td><td><strong>12900.0</strong> ft³/s</td></tr>
+<tr><td>Snake River At Hells Canyon Dam Id-Or State Line</td><td><strong>12700.0</strong> ft³/s</td></tr>
+<tr><td>Colorado River Below Palo Verde Dam, Az-Ca</td><td><strong>12600.0</strong> ft³/s</td></tr>
+<tr><td>Sacramento R A Freeport Ca</td><td><strong>12500.0</strong> ft³/s</td></tr>
+<tr><td>Sacramento R Ab Bend Bridge Nr Red Bluff Ca</td><td><strong>12400.0</strong> ft³/s</td></tr>
+<tr><td>Sacramento R A Keswick Ca</td><td><strong>11500.0</strong> ft³/s</td></tr>
+<tr><td>Brazos Rv Nr West Columbia, Tx</td><td><strong>11500.0</strong> ft³/s</td></tr>
+<tr><td>Brazos Rv Nr Sugar Land, Tx</td><td><strong>10800.0</strong> ft³/s</td></tr>
+<tr><td>Brazos Rv Nr Rosharon, Tx</td><td><strong>10800.0</strong> ft³/s</td></tr>
+<tr><td>Willamette River At Newberg, Or</td><td><strong>10000.0</strong> ft³/s</td></tr>
+<tr><td>Trinity Rv Nr Crockett, Tx</td><td><strong>9660.0</strong> ft³/s</td></tr>
+<tr><td>Brazos Rv At Richmond, Tx</td><td><strong>9640.0</strong> ft³/s</td></tr>
+<tr><td>Sacramento R A Colusa Ca</td><td><strong>9400.0</strong> ft³/s</td></tr>
+<tr><td>Willamette River At Salem, Or</td><td><strong>9350.0</strong> ft³/s</td></tr></table>
+<h2>Why water data matters in geotechnics</h2><p>Groundwater levels and river flow drive pore-water pressure, effective stress, slope stability, well yield and the design of foundations, dewatering and drilling. Monitoring official hydrological networks helps anticipate seasonal and flood conditions on site.</p>
+<h2>Official source</h2><div class="src"><p>Data: <strong>USGS Water Data</strong>. <a href="https://waterdata.usgs.gov/" target="_blank" rel="noopener">Official portal →</a></p></div>
+<div class="cta"><h3>Standard Penetration Test — drilling & groundwater services</h3><p>Water wells, dewatering, permeability testing and geotechnical site investigation.</p><a href="/">Our services →</a></div>
+</div></main><footer><div class="container"><p>&copy; 2026 Standard Penetration Test · USGS Water Data</p></div></footer></body></html>
